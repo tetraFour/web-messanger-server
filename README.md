@@ -1,4 +1,4 @@
-# Web Messanger(Server)
+# Web Messenger(Server)
 
 ### Tech Stack
 
