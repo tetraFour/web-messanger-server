@@ -5,9 +5,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 
-import { UserModel } from 'models';
-import { IControllerBase } from 'interfaces';
-import { signInValidation, signUpValidation } from 'validations';
+import { UserModel } from '~/models';
+import { IControllerBase } from '~/interfaces';
+import { signInValidation, signUpValidation } from '~/validations';
 
 class AuthController implements IControllerBase {
   public path = '/api/auth';

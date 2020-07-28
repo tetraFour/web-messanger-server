@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
-import { IControllerBase } from 'interfaces';
+import { IControllerBase } from '~/interfaces';
 
 class UserController implements IControllerBase {
   public path = '/api/user';

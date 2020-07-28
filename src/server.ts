@@ -1,11 +1,11 @@
-import 'config/environment.config';
-import 'config/passport.config';
+import './config/environment.config';
+import './config/passport.config';
 
 import express from 'express';
 import cors from 'cors';
 import passport from 'passport';
 
-import App from 'app';
+import App from '~/app';
 
 import { LoggerMiddleware } from './middleware';
 import { AuthController, MessageController } from './controllers';

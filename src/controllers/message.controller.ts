@@ -6,9 +6,9 @@ import passport from 'passport';
 
 import jwt from 'jsonwebtoken';
 
-import { MessageModel, MessageContentModel } from 'models';
+import { MessageModel, MessageContentModel } from '~/models';
 
-import { IControllerBase } from 'interfaces';
+import { IControllerBase } from '~/interfaces';
 
 class MessageController implements IControllerBase {
   public path = '/api/message';
