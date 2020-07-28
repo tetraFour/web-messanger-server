@@ -40,7 +40,7 @@ const User = new Schema({
   },
   is_verified: {
     type: Schema.Types.Boolean,
-    default: false,
+    default: true,
   },
   contactList: {
     type: [Schema.Types.String],
