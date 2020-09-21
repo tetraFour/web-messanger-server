@@ -6,6 +6,7 @@ export interface IUserModel extends Document {
   email: string;
   login: string;
   password: string;
+  isOnline: boolean;
   avatar: string;
   online: Date;
   is_verified: boolean;
@@ -20,6 +21,9 @@ const User = new Schema({
     type: Schema.Types.String,
     required: true,
     unique: true,
+  },
+  isOnline: {
+    type: Schema.Types.Boolean,
   },
   login: {
     type: Schema.Types.String,
@@ -44,6 +48,7 @@ const User = new Schema({
   },
   contactList: {
     type: [Schema.Types.String],
+    ref: 'User',
     default: void 0,
   },
 });

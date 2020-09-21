@@ -21,6 +21,11 @@ class AuthController implements IControllerBase {
     this.router.post(`${this.path}/sign-in`, signInValidation, this.signIn);
     this.router.post(`${this.path}/sign-up`, signUpValidation, this.signUp);
     this.router.get(
+      `${this.path}/logout`,
+      passport.authenticate('jwt', { session: false }),
+      this.logout,
+    );
+    this.router.get(
       `${this.path}/protected`,
       passport.authenticate('jwt', { session: false }),
       this.protected,
@@ -28,6 +33,7 @@ class AuthController implements IControllerBase {
   };
 
   private signIn = async (req: Request, res: Response) => {
+    const { login, password } = req.body;
     try {
       const errors = validationResult(req);
 
@@ -38,7 +44,6 @@ class AuthController implements IControllerBase {
         });
       }
 
-      const { login, password } = req.body;
       const user = await UserModel.findOne({ login });
 
       if (!user) {
@@ -56,21 +61,19 @@ class AuthController implements IControllerBase {
       const token = jwt.sign(
         { login: user.login, userId: user.id },
         <string>process.env.JWT_SECRET,
-        // {
-        //   expiresIn: '1h',
-        // },
       );
       return res
         .status(200)
-        .json({ token: `bearer ${token}`, userId: user.id, message: 'qwe' });
+        .cookie('ut', `${token}`, { maxAge: 99999999, httpOnly: true })
+        .json({ userId: user.id, avatar: user.avatar });
     } catch (error) {
       return res
         .status(500)
         .json({ message: 'что-то пошло не так! попробуйте снова.' });
     }
   };
+
   private signUp = async (req: Request, res: Response) => {
-    console.log(req.body);
     try {
       const errors = validationResult(req);
 
@@ -115,9 +118,19 @@ class AuthController implements IControllerBase {
         .json({ message: 'что-то пошло не так! попробуйте снова.' });
     }
   };
+
+  private logout = (req: Request, res: Response) => {
+    return res
+      .clearCookie('ut')
+      .status(200)
+      .send('logout!');
+  };
+
   private protected = (req: Request, res: Response) => {
     console.log('im protected');
-    return res.status(200).send('im protected');
+    // const cookies = req.cookies.usertoken;
+    // console.log(cookies);
+    return res.status(200).send(req.cookies);
   };
 }
 
